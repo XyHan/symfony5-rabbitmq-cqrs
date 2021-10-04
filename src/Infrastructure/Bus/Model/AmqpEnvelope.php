@@ -52,4 +52,12 @@ class AmqpEnvelope
         $this->headers = $headers;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return get_class($this);
+    }
 }

@@ -55,3 +55,8 @@
 /var/portainer-data
 .bash_history
 .composer
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###

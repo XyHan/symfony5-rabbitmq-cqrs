@@ -2,11 +2,7 @@ framework:
     messenger:
         default_bus: command.bus
         buses:
-            command.bus:
-                middleware:
-                    - doctrine_ping_connection
-                    - doctrine_close_connection
-                    - doctrine_transaction
+            command.bus: ~
             event.bus:
                 default_middleware: allow_no_handlers
         failure_transport: failed

@@ -6,6 +6,7 @@ use App\Infrastructure\Bus\Model\AmqpEnvelope;
 use App\Infrastructure\Serializer\Denormalizer\Command\MyCommandDenormalizer;
 use App\Infrastructure\Serializer\Denormalizer\Model\AmqpEnvelopeDenormalizer;
 use App\Infrastructure\ValueObject\CommandIndex;
+use JetBrains\PhpStorm\ArrayShape;
 use ReflectionClass;
 use ReflectionException;
 use Throwable;
@@ -102,7 +103,7 @@ final class AmqpTransportSerializer implements MessengerSerializerInterface
      * @return array
      * @throws ReflectionException
      */
-    public function encode(Envelope $envelope): array
+    #[ArrayShape(['body' => "string", 'headers' => "array"])] public function encode(Envelope $envelope): array
     {
         $message = $envelope->getMessage();
         $class = new ReflectionClass($message->getName());

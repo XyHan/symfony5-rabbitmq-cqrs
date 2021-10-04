@@ -12,11 +12,11 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
     _instanceof:
-        App\Application\Command\CommandHandler:
+        App\Domain\Command\CommandHandler:
             tags:
                 - { name: messenger.message_handler, bus: command.bus }
 
-        App\Application\Event\EventBus:
+        App\Domain\Event\EventBus:
             tags:
                 - { name: messenger.bus, bus: event.bus }
 

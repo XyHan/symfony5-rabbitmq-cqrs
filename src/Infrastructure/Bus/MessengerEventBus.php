@@ -2,14 +2,14 @@
 
 namespace App\Infrastructure\Bus;
 
-use App\Application\Event\Event;
-use App\Application\Event\EventBus;
+use App\Domain\Event\Event;
+use App\Domain\Event\EventBus;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 /**
  * Class MessengerEventBus
  */
-final class MessengerEventBus implements EventBus
+class MessengerEventBus implements EventBus
 {
     /**
      * @var MessageBusInterface

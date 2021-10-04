@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\Bus;
 
-use App\Application\Command\Command;
-use App\Application\Command\CommandBus;
+use App\Domain\Command\Command;
+use App\Domain\Command\CommandBus;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 /**
