@@ -14,8 +14,8 @@
       "limits": {}
     },
     {
-      "name": "curriculum",
-      "password_hash": "eXvrYvpZcBBL/fzoIyuM5IJUh7NquXvyP4mqxStFRExop63l",
+      "name": "user",
+      "password_hash": "wTh+OoisyPMrC+18pTtiCn6XCjOCQWYNcdBxYrWQnxJUTVz+",
       "hashing_algorithm": "rabbit_password_hashing_sha256",
       "tags": [
         "administrator"
@@ -30,14 +30,14 @@
   ],
   "permissions": [
     {
-      "user": "rabbitmq",
+      "user": "user",
       "vhost": "/",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
     },
     {
-      "user": "curriculum",
+      "user": "rabbitmq",
       "vhost": "/",
       "configure": ".*",
       "write": ".*",
@@ -46,7 +46,7 @@
   ],
   "topic_permissions": [
     {
-      "user": "curriculum",
+      "user": "user",
       "vhost": "/",
       "exchange": "",
       "write": ".*",
@@ -67,7 +67,7 @@
   "policies": [],
   "queues": [
     {
-      "name": "q_curriculum_api_to_curriculum_gw_event",
+      "name": "q_api_to_gw_event",
       "vhost": "/",
       "durable": true,
       "auto_delete": false,
@@ -76,7 +76,7 @@
       }
     },
     {
-      "name": "q_curriculum_gw_to_curriculum_api_command",
+      "name": "q_gw_to_api_command",
       "vhost": "/",
       "durable": true,
       "auto_delete": false,
@@ -87,7 +87,7 @@
   ],
   "exchanges": [
     {
-      "name": "ex_curriculum_event",
+      "name": "ex_event",
       "vhost": "/",
       "type": "fanout",
       "durable": true,
@@ -96,7 +96,7 @@
       "arguments": {}
     },
     {
-      "name": "ex_curriculum_command",
+      "name": "ex_command",
       "vhost": "/",
       "type": "fanout",
       "durable": true,
@@ -107,17 +107,17 @@
   ],
   "bindings": [
     {
-      "source": "ex_curriculum_command",
+      "source": "ex_command",
       "vhost": "/",
-      "destination": "q_curriculum_gw_to_curriculum_api_command",
+      "destination": "q_gw_to_api_command",
       "destination_type": "queue",
       "routing_key": "",
       "arguments": {}
     },
     {
-      "source": "ex_curriculum_event",
+      "source": "ex_event",
       "vhost": "/",
-      "destination": "q_curriculum_api_to_curriculum_gw_event",
+      "destination": "q_api_to_gw_event",
       "destination_type": "queue",
       "routing_key": "",
       "arguments": {}

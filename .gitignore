@@ -53,3 +53,5 @@
 
 .idea
 /var/portainer-data
+.bash_history
+.composer

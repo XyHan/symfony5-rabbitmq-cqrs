@@ -1,0 +1,39 @@
+framework:
+    messenger:
+        default_bus: command.bus
+        buses:
+            command.bus:
+                middleware:
+                    - doctrine_ping_connection
+                    - doctrine_close_connection
+                    - doctrine_transaction
+            event.bus:
+                default_middleware: allow_no_handlers
+        failure_transport: failed
+        transports:
+            amqp_command_transport:
+                dsn: '%env(MESSENGER_TRANSPORT_AMQP_DSN)%'
+                retry_strategy:
+                    max_retries: 0
+                options:
+                    exchange:
+                        name: ex_command
+                        type: fanout
+                    queues:
+                        q_gw_to_api_command: ~
+                serializer: App\Infrastructure\Serializer\AmqpTransportSerializer
+            amqp_event_transport:
+                dsn: '%env(MESSENGER_TRANSPORT_AMQP_DSN)%'
+                retry_strategy:
+                    max_retries: 0
+                options:
+                    exchange:
+                        name: ex_event
+                        type: fanout
+                    queues:
+                        q_api_to_gw_event: ~
+                serializer: App\Infrastructure\Serializer\AmqpTransportSerializer
+            failed: 'doctrine://default?queue_name=failed'
+        routing:
+            'App\Application\Command\MyCommand\MyCommand': amqp_command_transport
+            'App\Application\Event\MyEvent\MyEvent': amqp_event_transport
