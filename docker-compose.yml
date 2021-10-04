@@ -1,0 +1,48 @@
+version: '3.2'
+
+services:
+  portainer:
+    image: "portainer/portainer"
+    container_name: "portainer"
+    restart: "no"
+    ports:
+      - "9000:9000"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./var/portainer-data:/data"
+    networks:
+      - "default"
+
+  php:
+    build: "docker/php"
+    container_name: "php"
+    hostname: "curriculum-php"
+    working_dir: "/var/www"
+    environment:
+      USER_UID: "${USER_UID}"
+      USER_GID: "${USER_GID}"
+      XDEBUG_CONFIG: "${XDEBUG_CONFIG}"
+      PHP_IDE_CONFIG: "serverName=symfony.local"
+    restart: "no"
+    volumes:
+      - "/var/www/symfony5-rabbitmq-cqrs:/var/www"
+      - "~/.composer:/home/www-data/.composer"
+    networks:
+      - "default"
+
+  rabbitmq:
+    build: "./docker/rabbitmq"
+    container_name: "rabbitmq"
+    ports:
+      - "15671:15671"
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+    networks:
+      - "default"
+
+networks:
+  default:
+    driver: "bridge"
