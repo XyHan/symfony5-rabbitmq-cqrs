@@ -23,8 +23,11 @@ services:
       USER_GID: "${USER_GID}"
       XDEBUG_CONFIG: "${XDEBUG_CONFIG}"
       PHP_IDE_CONFIG: "serverName=symfony.local"
-    restart: "no"
+    restart: "always"
+    ports:
+      - "8741:80"
     volumes:
+      - "./docker/php/vhosts:/etc/apache2/sites-enabled"
       - "/var/www/symfony5-rabbitmq-cqrs:/var/www"
       - "~/.composer:/home/www-data/.composer"
     networks:

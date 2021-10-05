@@ -2,6 +2,7 @@ FROM php:8.0-apache
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN usermod -u 1000 www-data
 RUN mkdir -p /home/www-data
 RUN pecl install channel://pecl.php.net/xdebug-3.0.4
@@ -49,3 +50,5 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Set up the command arguments.
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+WORKDIR /var/www/
