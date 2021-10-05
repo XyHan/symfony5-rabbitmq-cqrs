@@ -43,6 +43,20 @@ services:
     networks:
       - "default"
 
+  db:
+    build: "./docker/mysql"
+    container_name: "curriculum-mysql"
+    hostname: "curriculum-mysql"
+    restart: "no"
+    environment:
+      MYSQL_ROOT_PASSWORD: "toor"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./var/mysql:/var/lib/mysql"
+    networks:
+      - "default"
+
 networks:
   default:
     driver: "bridge"
