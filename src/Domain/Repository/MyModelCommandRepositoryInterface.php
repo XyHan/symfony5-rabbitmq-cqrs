@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Repository\Education;
+namespace App\Domain\Repository;
 
 use App\Domain\Model\MyModelInterface;
 

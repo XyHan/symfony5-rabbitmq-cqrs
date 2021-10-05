@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Infrastructure\Repository\Education;
+namespace App\Infrastructure\Repository;
 
 use App\Domain\Model\MyModelInterface;
-use App\Domain\Repository\Education\MyModelCommandRepositoryInterface;
+use App\Domain\Repository\MyModelCommandRepositoryInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 
