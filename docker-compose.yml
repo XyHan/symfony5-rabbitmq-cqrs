@@ -6,7 +6,7 @@ services:
     container_name: "portainer"
     restart: "no"
     ports:
-      - "9000:9000"
+      - "9999:9000"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./var/portainer-data:/data"
@@ -16,7 +16,7 @@ services:
   php:
     build: "docker/php"
     container_name: "php"
-    hostname: "curriculum-php"
+    hostname: "php"
     working_dir: "/var/www"
     environment:
       USER_UID: "${USER_UID}"
@@ -45,8 +45,8 @@ services:
 
   db:
     build: "./docker/mysql"
-    container_name: "curriculum-mysql"
-    hostname: "curriculum-mysql"
+    container_name: "mysql"
+    hostname: "mysql"
     restart: "no"
     environment:
       MYSQL_ROOT_PASSWORD: "toor"
