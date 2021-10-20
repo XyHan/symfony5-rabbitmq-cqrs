@@ -16,6 +16,10 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: command.bus }
 
+        App\Domain\Query\QueryHandler:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
+
         App\Domain\Event\EventBus:
             tags:
                 - { name: messenger.bus, bus: event.bus }
