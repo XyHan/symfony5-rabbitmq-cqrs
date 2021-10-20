@@ -12,6 +12,7 @@
         "doctrine/doctrine-bundle": "^2.2",
         "doctrine/doctrine-migrations-bundle": "^3.1.1",
         "doctrine/orm": "^2.7",
+        "ramsey/uuid": "^4.2",
         "symfony/amqp-messenger": "5.3.*",
         "symfony/console": "5.3.*",
         "symfony/doctrine-messenger": "5.3.*",
