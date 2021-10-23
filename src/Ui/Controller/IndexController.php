@@ -8,8 +8,9 @@ use App\Domain\Command\CommandBus;
 use App\Domain\Query\QueryBus;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -46,17 +47,9 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/", name="homepage", methods={"GET"})
-     */
-    public function index(): JsonResponse
-    {
-        return new JsonResponse('Hello !');
-    }
-
-    /**
      * @Route("/add", name="add", methods={"POST"})
      */
-    public function add(Request $request): JsonResponse
+    public function add(Request $request): Response
     {
         $command = new MyCommand(
             $request->request->get('requestId'),
@@ -64,16 +57,16 @@ class IndexController extends AbstractController
             $request->request->get('uuid')
         );
         $this->commandBus->dispatch($command);
-        return new JsonResponse($this->serializer->serialize($command, 'json'));
+        return new Response($this->serializer->serialize($command, 'json'));
     }
 
     /**
      * @Route("/listall", name="listall", methods={"GET"})
      */
-    public function listAll(): JsonResponse
+    public function listAll(): Response
     {
         $query = new MyQuery();
         $entities = $this->queryBus->handleQuery($query);
-        return new JsonResponse($this->serializer->serialize($entities, 'json'));
+        return new Response($this->serializer->serialize($entities, 'json'));
     }
 }
