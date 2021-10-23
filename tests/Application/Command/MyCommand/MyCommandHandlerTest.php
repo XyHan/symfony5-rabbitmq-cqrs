@@ -5,6 +5,8 @@ namespace App\Tests\Application\Command\MyCommand;
 use App\Application\Command\MyCommand\MyCommand;
 use App\Application\Command\MyCommand\MyCommandHandler;
 use App\Domain\Event\EventBus;
+use App\Domain\Factory\MyModelFactory\MyModelFactoryInterface;
+use App\Domain\Repository\MyModelCommandRepositoryInterface;
 use App\Infrastructure\Bus\MessengerEventBus;
 use Exception;
 use Monolog\Logger;
@@ -26,8 +28,20 @@ final class MyCommandHandlerTest extends TestCase
      */
     private EventBus $eventBus;
 
+    /**
+     * @var MyModelFactoryInterface
+     */
+    private MyModelFactoryInterface $factory;
+
+    /**
+     * @var MyModelCommandRepositoryInterface
+     */
+    private MyModelCommandRepositoryInterface $commandRepository;
+
     protected function setUp(): void
     {
+        $this->factory = $this->createMock(MyModelFactoryInterface::class);
+        $this->commandRepository = $this->createMock(MyModelCommandRepositoryInterface::class);
         $this->logger = $this->createMock(Logger::class);
         $this->eventBus = $this->createMock(MessengerEventBus::class);
     }
@@ -39,7 +53,7 @@ final class MyCommandHandlerTest extends TestCase
             '30b372b5-091a-43fd-86ff-5dde9f9ff681',
             'd6780344-9eff-4ea8-b9fd-3b2fd11af9f7',
         );
-        $handler = new MyCommandHandler($this->logger, $this->eventBus);
+        $handler = new MyCommandHandler($this->factory, $this->commandRepository, $this->logger, $this->eventBus);
         $isOk = true;
         try {
             $handler->__invoke($command);
