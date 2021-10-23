@@ -1,0 +1,25 @@
+default:
+    suites:
+        default:
+            contexts:
+                - App\Tests\Behat\FeatureContext
+                - behatch:context:json
+                - behatch:context:rest
+                - Behat\MinkExtension\Context\MinkContext
+    extensions:
+        FriendsOfBehat\SymfonyExtension:
+            kernel:
+                environment: test
+            bootstrap: tests/bootstrap.php
+        Behatch\Extension: ~
+        Behat\MinkExtension:
+            sessions:
+                default:
+                    symfony: ~
+        AdamQuaile\Behat\CommandRunnerExtension:
+            beforeSuite:
+                - { command: 'php /var/www/bin/console --env=test d:d:d --force --if-exists' }
+                - { command: 'php /var/www/bin/console --env=test d:d:c' }
+                - { command: 'php /var/www/bin/console --env=test d:s:u --force' }
+            afterSuite:
+                - { command: 'php /var/www/bin/console --env=test d:d:d --force --if-exists' }
