@@ -2,11 +2,11 @@
 
 namespace App\Application\Command\MyCommand;
 
-use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
+use Symfony\Component\Messenger\Exception\TransportException;
 
 /**
  * Class MyCommandHandlerException
  */
-class MyCommandHandlerException extends UnrecoverableMessageHandlingException
+class MyCommandHandlerException extends TransportException
 {
 }
