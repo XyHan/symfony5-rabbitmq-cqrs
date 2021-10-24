@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat;
 
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
 use Behat\Behat\Context\Context;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -3,10 +3,15 @@
 # http://behat.org/en/latest/quick_start.html
 
 Feature:
-    In order to prove that the Behat Symfony extension is correctly installed
+    In order to prove that the CQRS pattern is correctly set up
     As a user
-    I want to have a demo scenario
+    I want to persist data and then list that data
 
-    Scenario: It receives a response from Symfony's kernel
-        When a demo scenario sends a request to "/"
-        Then the response should be received
+    Scenario: It persists data in db and then read them
+        Given I send a "POST" request to "/add" with parameters:
+        |   key         |   value        |
+        |   requestId   |   myRequestId  |
+        |   uuid        |   myUuid       |
+        Then the response status code should be 200
+        And the response should be in JSON
+        And the JSON node "uuid" should be equal to "myUuid"

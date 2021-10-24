@@ -8,4 +8,7 @@ chown www-data:www-data -R /home/www-data/.composer
 
 service apache2 restart
 
+php /var/www/bin/console d:d:c
+php /var/www/bin/console d:m:m --no-interaction
+
 exec "$@"

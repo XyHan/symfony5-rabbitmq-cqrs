@@ -8,18 +8,17 @@ default:
                 - Behat\MinkExtension\Context\MinkContext
     extensions:
         FriendsOfBehat\SymfonyExtension:
+            bootstrap: tests/bootstrap.php
             kernel:
                 environment: test
-            bootstrap: tests/bootstrap.php
         Behatch\Extension: ~
         Behat\MinkExtension:
             sessions:
                 default:
                     symfony: ~
         AdamQuaile\Behat\CommandRunnerExtension:
-            beforeSuite:
-                - { command: 'php /var/www/bin/console --env=test d:d:d --force --if-exists' }
-                - { command: 'php /var/www/bin/console --env=test d:d:c' }
-                - { command: 'php /var/www/bin/console --env=test d:s:u --force' }
-            afterSuite:
-                - { command: 'php /var/www/bin/console --env=test d:d:d --force --if-exists' }
+            beforeScenario:
+                - { command: 'rm -rf var/cache/test' }
+                - { command: 'php /var/www/bin/console d:d:d --force --if-exists' }
+                - { command: 'php /var/www/bin/console d:d:c' }
+                - { command: 'php /var/www/bin/console d:m:m --no-interaction' }

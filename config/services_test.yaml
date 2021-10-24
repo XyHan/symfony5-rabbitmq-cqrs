@@ -3,5 +3,7 @@ services:
         autowire: true
         autoconfigure: true
 
+    Behatch\HttpCall\Request: ~
+
     App\Tests\Behat\:
         resource: '../tests/Behat/*'
