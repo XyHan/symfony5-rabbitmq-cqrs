@@ -10,6 +10,7 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -50,12 +51,14 @@ class IndexController extends AbstractController
      */
     public function add(Request $request): Response
     {
-        $command = new MyCommand(
-            $request->request->get('requestId'),
-            Uuid::uuid4(),
-            $request->request->get('uuid')
-        );
+        $requestId = $request->request->get('requestId');
+        $uuid = $request->request->get('uuid');
+        if (!$requestId) throw new HttpException(400, 'RequestId param is missing');
+        if (!$uuid) throw new HttpException(400, 'Uuid param is missing');
+
+        $command = new MyCommand($requestId, Uuid::uuid4(), $uuid);
         $this->commandBus->dispatch($command);
+
         return new Response($this->serializer->serialize($command, 'json'));
     }
 
@@ -66,6 +69,7 @@ class IndexController extends AbstractController
     {
         $query = new MyQuery();
         $entities = $this->queryBus->handleQuery($query);
+
         return new Response($this->serializer->serialize(['entities' => $entities], 'json'));
     }
 }

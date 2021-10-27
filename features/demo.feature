@@ -22,3 +22,25 @@ Feature:
         And the response should be in JSON
         And the JSON node "entities[0].uuid" should exist
         And the JSON node "entities[0].uuid" should not be null
+
+    Scenario: It tries to persist data but requestId param is missing
+        Given I send a "POST" request to "/add" with parameters:
+            |   key         |   value        |
+            |   uuid        |   myUuid       |
+        Then the response status code should be 400
+
+        When I send a "GET" request to "/listall"
+        Then the response status code should be 200
+        And the response should be in JSON
+        And the JSON node "entities[0]" should not exist
+
+    Scenario: It tries to persist data but uuid param is missing
+        Given I send a "POST" request to "/add" with parameters:
+            |   key         |   value        |
+            |   requestId   |   myRequestId  |
+        Then the response status code should be 400
+
+        When I send a "GET" request to "/listall"
+        Then the response status code should be 200
+        And the response should be in JSON
+        And the JSON node "entities[0]" should not exist
