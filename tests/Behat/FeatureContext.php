@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat;
 
-error_reporting(0);
+// Disable deprecated warnings from behat context
+error_reporting(E_ALL ^ E_DEPRECATED);
 
 use Behatch\Context\BaseContext;
 use Symfony\Component\HttpFoundation\Request;
