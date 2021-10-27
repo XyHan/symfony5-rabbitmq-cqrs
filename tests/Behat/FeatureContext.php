@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat;
 
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+error_reporting(0);
 
-use Behat\Behat\Context\Context;
+use Behatch\Context\BaseContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @see http://behat.org/en/latest/quick_start.html
  */
-final class FeatureContext implements Context
+final class FeatureContext extends BaseContext
 {
     /** @var KernelInterface */
     private $kernel;
@@ -46,5 +46,13 @@ final class FeatureContext implements Context
         if ($this->response === null) {
             throw new \RuntimeException('No response received');
         }
+    }
+
+    /**
+     * @Then we should wait :seconds
+     */
+    public function weShouldWait(int $seconds): void
+    {
+        sleep($seconds);
     }
 }

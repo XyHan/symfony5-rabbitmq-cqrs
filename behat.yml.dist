@@ -9,16 +9,20 @@ default:
     extensions:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/bootstrap.php
-            kernel:
-                environment: test
         Behatch\Extension: ~
         Behat\MinkExtension:
             sessions:
                 default:
                     symfony: ~
         AdamQuaile\Behat\CommandRunnerExtension:
-            beforeScenario:
+            beforeSuite:
                 - { command: 'rm -rf var/cache/test' }
-                - { command: 'php /var/www/bin/console d:d:d --force --if-exists' }
-                - { command: 'php /var/www/bin/console d:d:c' }
-                - { command: 'php /var/www/bin/console d:m:m --no-interaction' }
+                - { command: 'php /var/www/bin/console --env=test d:d:d --force --if-exists' }
+                - { command: 'php /var/www/bin/console --env=test d:d:c' }
+                - { command: 'php /var/www/bin/console --env=test d:m:m --no-interaction' }
+                - { command: 'supervisorctl stop all' }
+                - { command: 'php /var/www/bin/console --env=test messenger:consume amqp_command_transport --quiet --limit=1', background: true }
+            afterSuite:
+                - { command: 'php /var/www/bin/console --env=test messenger:stop-workers' }
+                - { command: 'php /var/www/bin/console --env=test d:d:d --force --if-exists' }
+                - { command: 'supervisorctl start all' }

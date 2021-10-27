@@ -66,6 +66,6 @@ class IndexController extends AbstractController
     {
         $query = new MyQuery();
         $entities = $this->queryBus->handleQuery($query);
-        return new Response($this->serializer->serialize($entities, 'json'));
+        return new Response($this->serializer->serialize(['entities' => $entities], 'json'));
     }
 }
